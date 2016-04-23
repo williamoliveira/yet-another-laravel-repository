@@ -10,12 +10,12 @@ interface BaseRepository
 {
 
     /**
-     * Apply a query to the query
+     * Apply a criteria to the query
      *
-     * @param Criteria|\Closure $query
+     * @param Criteria|\Closure $criteria
      * @return mixed
      */
-    public function applyQuery($query);
+    public function applyCriteria($criteria);
 
     /**
      * Make a new empty model
