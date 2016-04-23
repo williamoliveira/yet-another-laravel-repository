@@ -1,14 +1,14 @@
 <?php namespace Williamoliveira\Repository\Eloquent;
 
 use Williamoliveira\Repository\Contracts\BaseRepository as BaseRepositoryInterface;
+use Williamoliveira\Repository\Exceptions\NotFoundRepositoryException;
 use Williamoliveira\Repository\Exceptions\UpdateFailedRepositoryException;
 use Williamoliveira\Repository\Exceptions\StoreFailedRepositoryException;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Williamoliveira\Repository\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Williamoliveira\Repository\Contracts\Query;
+use Williamoliveira\Repository\Contracts\Criteria;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -43,27 +43,27 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Apply a query
      *
-     * @param Query|Closure $query
+     * @param Criteria|Closure $criteria
      * @return mixed
      * @throws \Exception
      */
-    public function applyQuery($query)
+    public function applyCriteria($criteria)
     {
         $query = $this->getQuery();
 
-        if($query instanceof Query){
-            $query->apply($query) || $query;
+        if($criteria instanceof Criteria){
+            $criteria->apply($query);
 
             return $this;
         }
 
-        if($query instanceof Closure){
-            $query($query) || $query;
+        if($criteria instanceof Closure){
+            $criteria($query);
 
             return $this;
         }
 
-        throw new RepositoryException("Must be an instance of " . Query::class . " or \\Closure");
+        throw new RepositoryException("Must be an instance of " . Criteria::class . " or \\Closure");
     }
 
     /**
@@ -104,6 +104,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
      * @param $id
      * @param array $columns
      * @return mixed
+     * @throws NotFoundRepositoryException
      */
     public function getById($id, $columns = ['*'])
     {
@@ -111,7 +112,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
             $results = $this->getQuery()->findOrFail($id, $columns);
         }
         catch(ModelNotFoundException $e){
-            throw new NotFoundResourceException($e);
+            throw new NotFoundRepositoryException($e);
         }
 
         return $this->returnResults($results);

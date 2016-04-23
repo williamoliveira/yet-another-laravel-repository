@@ -12,7 +12,7 @@ interface BaseRepository
     /**
      * Apply a query to the query
      *
-     * @param Query|\Closure $query
+     * @param Criteria|\Closure $query
      * @return mixed
      */
     public function applyQuery($query);

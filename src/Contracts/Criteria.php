@@ -4,7 +4,7 @@ namespace Williamoliveira\Repository\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
 
-interface Query
+interface Criteria
 {
     /**
      * @param Builder $query
