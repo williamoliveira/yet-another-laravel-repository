@@ -1,0 +1,33 @@
+{
+  "name": "williamoliveira/yet-another-laravel-repository",
+  "description": "Laravel 5 - Yet Another Laravel Repository with default eloquent implementation",
+  "keywords": ["laravel", "repository", "eloquent", "model"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "William Oliveira",
+      "email": "william.oliveir4@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "william.oliveir4@gmail.com",
+    "issues":"https://github.com/williamoliveira/yet-another-laravel-repository/issues",
+    "wiki":"https://github.com/williamoliveira/yet-another-laravel-repository",
+    "source":"https://github.com/williamoliveira/yet-another-laravel-repository"
+  },
+  "require": {
+    "illuminate/support": "~5.0",
+    "illuminate/database": "~5.0",
+    "illuminate/pagination": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Williamoliveira\\Repository\\": "src/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "stable"
+}
